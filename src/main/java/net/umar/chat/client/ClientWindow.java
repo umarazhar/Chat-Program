@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import net.umar.chat.data.DataHandler;
 
 public class ClientWindow extends JFrame implements Runnable {
 
@@ -184,7 +185,7 @@ public class ClientWindow extends JFrame implements Runnable {
                         System.out.println("Message: " + newMessage);
                     } else if (line[1].trim().equals("File")) {
                         System.out.println("Incoming File!");
-                        byte[] newFile = user.retrieveData(Integer.parseInt(message.split(" ")[3].trim()));
+//                        byte[] newFile = user.retrieveData(Integer.parseInt(message.split(" ")[3].trim()));
                         String tmpName = line[2].trim();
                         ChatWindow tmpWindow = windows.get(tmpName);
                         if (tmpWindow != null) {
@@ -195,7 +196,8 @@ public class ClientWindow extends JFrame implements Runnable {
                                 if (fileChooser.getSelectedFile() != null) {
                                     String filename = fileChooser.getSelectedFile().getAbsolutePath() + "." + line[4];
                                     FileOutputStream fileOut = new FileOutputStream(filename);
-                                    fileOut.write(newFile);
+                                    DataHandler.readAndWriteToFile(user.getSocket().getInputStream(), fileOut, Integer.parseInt(message.split(" ")[3].trim()));
+//                                    fileOut.write(newFile);
                                     fileOut.close();
                                 }
                             } else {
@@ -209,12 +211,13 @@ public class ClientWindow extends JFrame implements Runnable {
                             if (fileChooser.getSelectedFile() != null) {
                                 String filename = fileChooser.getSelectedFile().getAbsolutePath() + "." + line[4];
                                 FileOutputStream fileOut = new FileOutputStream(filename);
-                                fileOut.write(newFile);
+                                DataHandler.readAndWriteToFile(user.getSocket().getInputStream(), fileOut, Integer.parseInt(message.split(" ")[3].trim()));
+//                                fileOut.write(newFile);
                                 fileOut.close();
                             }
                         }
                         System.out.println("Message received from: " + message.split(" ")[2]);
-                        System.out.println("Message: " + newFile);
+                        System.out.println("Received file!");
                     }
                 } else if (line[0].trim().equals("Failure")) {
                     if (line[1].trim().equals("Send")) {
