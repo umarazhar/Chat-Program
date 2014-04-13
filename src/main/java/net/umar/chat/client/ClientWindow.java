@@ -137,17 +137,17 @@ public class ClientWindow extends JFrame implements Runnable {
         JButton chat_button = new JButton("Chat");
 
         chat_button.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if (!user.isOnline()) {
-                            warnings.setText("Please connect to online server first!");
-                            return;
-                        }
-                        String friend = JOptionPane.showInputDialog("Who would you like to chat with?");
-                        ChatWindow newChat = new ChatWindow(user, user.getName(), friend);
-                        windows.put(friend, newChat);
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (!user.isOnline()) {
+                        warnings.setText("Please connect to online server first!");
+                        return;
                     }
+                    String friend = JOptionPane.showInputDialog("Who would you like to chat with?");
+                    ChatWindow newChat = new ChatWindow(user, user.getName(), friend);
+                    windows.put(friend, newChat);
                 }
+            }
         );
 
         button_box.add(chat_button);
@@ -244,7 +244,7 @@ public class ClientWindow extends JFrame implements Runnable {
                 ClientWindow window;
                 try {
                     window = new ClientWindow();
-                    
+
                     new Thread(window).start();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);

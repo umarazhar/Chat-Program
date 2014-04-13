@@ -49,9 +49,13 @@ public class DataHandler {
 	}
         
         public static void writeBytes(OutputStream os, byte[] data) throws IOException {
-//            for (int i = 0; i < data.length; i++) {
-                os.write(data, 0, data.length);
-//            }
+////            for (int i = 0; i < data.length; i++) {
+//                os.write(data, 0, data.length);
+////            }
+            for (int i = 0; i < data.length; i++) {
+                os.write(data[i]);
+            }
+            os.flush();
         }
 	
 	/**
@@ -80,27 +84,42 @@ public class DataHandler {
 	 * @param num - number of bytes to read from the input stream
 	 * @return the data in the inputstream
 	 */
-	public static byte[] readBytes(InputStream is, int num){
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		try {
-			if (br.ready()){
-				byte[] bytes = new byte[num];
-//				for (int i = 0; i < num; i++) {
-//					bytes[i] = (byte) br.read();
-//					
-//				}
-                                is.read(bytes, 0, num);
-//                                br.read(bytes, 0, num);
+        public static byte[] readBytes(InputStream is, int num) throws IOException {
+            byte[] data = new byte[num];
+            for (int i = 0; i < num; i++) {
+                data[i] = (byte)is.read();
+            }
+            return data;
+        }
+        
+        public static void readAndWriteToFile(InputStream is, OutputStream os, int num) throws IOException {
 
-				return bytes;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-                
-		
-		return null;
-	}
+            for (int i = 0; i < num; i++) {
+                os.write(is.read());
+            }
+        }
+        
+//	public static byte[] readBytes(InputStream is, int num){
+//		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//		try {
+//			if (br.ready()){
+//				byte[] bytes = new byte[num];
+////				for (int i = 0; i < num; i++) {
+////					bytes[i] = (byte) br.read();
+////					
+////				}
+//                                is.read(bytes, 0, num);
+////                                br.read(bytes, 0, num);
+//
+//				return bytes;
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//                
+//		
+//		return null;
+//	}
 	
 	/**
 	 * This method writes properties files
