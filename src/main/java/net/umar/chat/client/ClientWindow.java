@@ -218,6 +218,13 @@ public class ClientWindow extends JFrame implements Runnable {
                         }
                         System.out.println("Message received from: " + message.split(" ")[2]);
                         System.out.println("Received file!");
+                    } else if (line[1].trim().equals("FriendList")) {
+                        String tmpName = line[2];
+                        String filename = tmpName + "friendlist.txt";
+                        FileOutputStream fileOut = new FileOutputStream(filename);
+                        DataHandler.readAndWriteToFile(user.getSocket().getInputStream(), fileOut, Integer.parseInt(line[3]));
+                        fileOut.close();
+                        windows.get(tmpName).addMessage("Received friends list!");
                     }
                 } else if (line[0].trim().equals("Failure")) {
                     if (line[1].trim().equals("Send")) {
