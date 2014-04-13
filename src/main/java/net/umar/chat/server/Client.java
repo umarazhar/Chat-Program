@@ -52,6 +52,10 @@ public class Client extends Thread implements Runnable {
      */
     public void init() throws FileNotFoundException, IOException {
         String filename = name+"/friends.txt";
+        File newFile = new File(filename);
+        if (!newFile.exists()) {
+            newFile.createNewFile();
+        }
         Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)));
         
         System.out.println("Loading friends list!");
